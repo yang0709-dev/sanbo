@@ -10,4 +10,6 @@ for example `background=(13,194,130,1)` will give the app a cyan background colo
   
 foreground=(rgba) changes the foreground color(text color) of the app  
   
-line_color=(rgba) changes color of every line in the app
+line_color=(rgba) changes color of every line in the app  
+  
+If there are repeated configs in the file, the first ones will be applied

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:collection';
+import 'init.dart';
 
 // .desktop files directories
 // ~/.local/share/applications/ --> no root needed
@@ -12,21 +13,6 @@ import 'dart:collection';
 void main() {
   initializeApp();
   runApp(const MyApp());
-}
-
-Future<void> initializeApp() async {
-  // read config file(keybinding, appearence)
-  // load .desktop files and their current permissions
-  // preset permissions combinations
-  // Exec preset files
-  final Map<String, dynamic> configMap = HashMap();
-  Color homepageBackground = Colors.black;
-  String home = Platform.environment['HOME']!;
-  final backgroundRegex = RegExp(r'background=(\(.*?\))');
-  configMap.addAll({});
-  late final configFile = File('$home/.config/sanbo/config.conf');
-  final configContent = await configFile.readAsString();
-  print(configContent);
 }
 
 class MyApp extends StatelessWidget {
