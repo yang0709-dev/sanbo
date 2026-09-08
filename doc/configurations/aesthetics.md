@@ -13,3 +13,8 @@ foreground=(rgba) changes the foreground color(text color) of the app
 line_color=(rgba) changes color of every line in the app  
   
 If there are repeated configs in the file, the first ones will be applied
+
+## Example Config File
+background=(1,2,3,0)
+foreground=(4,5,6,0.7)
+line_color=(8,9,10,0.1)

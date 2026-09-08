@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'scan_dirs.dart';
 import 'dart:collection';
+import 'dart:convert';
 
 Future<void> initializeApp() async {
   // read config file(keybinding, appearence)
@@ -9,10 +11,12 @@ Future<void> initializeApp() async {
   // Exec preset files
   //
   // add to a hashmap and return it to use it later in home page widget
+  // the config file is a json
   final Map<String, dynamic> configMap = HashMap();
   String home = Platform.environment['HOME']!;
-  late final configFile = File('$home/.config/sanbo/config.conf');
-  final configContent = await configFile.readAsString();
+  late final configFile = File('$home/.config/sanbo/config.json');
+  final configResponse = await configFile.readAsString();
+  final configData = await json.decode(configResponse);
 
   List isValidRgba(String value) {
     final regex = RegExp(
@@ -34,22 +38,28 @@ Future<void> initializeApp() async {
     }
   }
 
+  List colorConfigOptions = ["background", "foreground", "line_color"];
+  for (var option in colorConfigOptions) {
+    List optionRgbaList = isValidRgba(configData[option]);
+    if (optionRgbaList[0]) {
+      configMap.addAll({
+        option: [optionRgbaList[1], optionRgbaList[2], optionRgbaList[3]],
+      });
+    } else if (optionRgbaList[1]) {
+      switch (option) {
+        case "background":
+          break;
+        case "foreground":
+          break;
+        case "line_color":
+          break;
+      }
+    }
+  }
+
   // reading background config in the file
   // returns something like (12,34,56,1)
   // and check if its a valid rgba color
-  final backgroundRegex = RegExp(r'background=(\(.*?\))');
-  final backgroundMatch = backgroundRegex.firstMatch(configContent);
-  final String backgroundMatchedText =
-      backgroundMatch?.group(1)?.toString() ?? '';
-  final List backgroundRgbaList = isValidRgba(backgroundMatchedText);
-  Color homepageBackground = backgroundRgbaList[0]
-      ? Color.fromRGBO(
-          backgroundRgbaList[1],
-          backgroundRgbaList[2],
-          backgroundRgbaList[3],
-          backgroundRgbaList[4],
-        )
-      : Colors.black;
-  print(homepageBackground);
+
   configMap.addAll({});
 }

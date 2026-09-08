@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:collection';
-import 'init.dart';
+import './initialize/init.dart';
 
 // .desktop files directories
 // ~/.local/share/applications/ --> no root needed
