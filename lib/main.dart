@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:collection';
 import './initialize/init.dart';
+import 'widgets/sidebar/application.dart';
 
 // .desktop files directories
 // ~/.local/share/applications/ --> no root needed
@@ -43,7 +44,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Column(mainAxisAlignment: .center, children: [
+        child: Column(
+          mainAxisAlignment: .center,
+          children: [
+            ApplicationContainer(
+              applicationName: "abb",
+              applicationIconPath: "fjalds",
+            ),
           ],
         ),
       ),

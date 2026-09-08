@@ -2,19 +2,22 @@
 Configure how the program looks
 
 ## Getting Started
-The config file is located at `~/.config/sanbo/config.conf`
+The config file is located at `~/.config/sanbo/config.json`
+The configuration will be a big hashmap, something like this:
+```json
+{
+  "background":"(10,10,10,1)",
+  "foreground":(200,200,200,1)
+}
+```
 
 ## Colors
-background=(rgba), changes the background color of the app,  
-for example `background=(13,194,130,1)` will give the app a cyan background color  
-  
-foreground=(rgba) changes the foreground color(text color) of the app  
-  
-line_color=(rgba) changes color of every line in the app  
-  
-If there are repeated configs in the file, the first ones will be applied
 
-## Example Config File
-background=(1,2,3,0)
-foreground=(4,5,6,0.7)
-line_color=(8,9,10,0.1)
+"background":"(rgba)" --> the background color of the app,  
+  
+"foreground":"(rgba)" --> the foreground color(text color) of the app  
+  
+"line_color":"(rgba)" --> color of every line in the app  
+  
+"app_background":"(rgba)" --> background color for the application widget
+

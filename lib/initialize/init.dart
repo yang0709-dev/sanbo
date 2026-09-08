@@ -4,6 +4,7 @@ import 'scan_dirs.dart';
 import 'dart:collection';
 import 'dart:convert';
 
+final Map<String, dynamic> configMap = HashMap();
 Future<void> initializeApp() async {
   // read config file(keybinding, appearence)
   // load .desktop files and their current permissions
@@ -12,7 +13,6 @@ Future<void> initializeApp() async {
   //
   // add to a hashmap and return it to use it later in home page widget
   // the config file is a json
-  final Map<String, dynamic> configMap = HashMap();
   String home = Platform.environment['HOME']!;
   late final configFile = File('$home/.config/sanbo/config.json');
   final configResponse = await configFile.readAsString();
@@ -39,27 +39,36 @@ Future<void> initializeApp() async {
   }
 
   List colorConfigOptions = ["background", "foreground", "line_color"];
+
   for (var option in colorConfigOptions) {
     List optionRgbaList = isValidRgba(configData[option]);
     if (optionRgbaList[0]) {
       configMap.addAll({
-        option: [optionRgbaList[1], optionRgbaList[2], optionRgbaList[3]],
+        option: [
+          optionRgbaList[1],
+          optionRgbaList[2],
+          optionRgbaList[3],
+          optionRgbaList[4],
+        ],
       });
-    } else if (optionRgbaList[1]) {
+    } else if (!optionRgbaList[0]) {
       switch (option) {
         case "background":
+          configMap.addAll({
+            option: [20, 20, 20, 1],
+          });
           break;
         case "foreground":
+          configMap.addAll({
+            option: [255, 255, 255, 1],
+          });
           break;
         case "line_color":
+          configMap.addAll({
+            option: [200, 200, 200, 1],
+          });
           break;
       }
     }
   }
-
-  // reading background config in the file
-  // returns something like (12,34,56,1)
-  // and check if its a valid rgba color
-
-  configMap.addAll({});
 }
