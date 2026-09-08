@@ -61,7 +61,8 @@ class _HomePageState extends State<HomePage> {
           children: [
             ApplicationContainer(
               applicationName: "abb",
-              applicationIconPath: "fjalds",
+              applicationIconPath:
+                  "/home/jupiter/Pictures/desktop-wallpapers/1gq3ckai0hqg1.png",
               config: widget.config,
             ),
           ],
