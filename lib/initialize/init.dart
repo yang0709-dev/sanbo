@@ -4,8 +4,8 @@ import 'scan_dirs.dart';
 import 'dart:collection';
 import 'dart:convert';
 
-final Map<String, dynamic> configMap = HashMap();
-Future<void> initializeApp() async {
+Future<Map> initializeApp() async {
+  final Map<String, dynamic> configMap = HashMap();
   // read config file(keybinding, appearence)
   // load .desktop files and their current permissions
   // preset permissions combinations
@@ -38,7 +38,12 @@ Future<void> initializeApp() async {
     }
   }
 
-  List colorConfigOptions = ["background", "foreground", "line_color"];
+  List colorConfigOptions = [
+    "background",
+    "foreground",
+    "line_color",
+    "app_background",
+  ];
 
   for (var option in colorConfigOptions) {
     List optionRgbaList = isValidRgba(configData[option]);
@@ -68,7 +73,13 @@ Future<void> initializeApp() async {
             option: [200, 200, 200, 1],
           });
           break;
+        case "app_background":
+          configMap.addAll({
+            option: [200, 200, 200, 1],
+          });
+          break;
       }
     }
   }
+  return configMap;
 }

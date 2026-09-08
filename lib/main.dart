@@ -10,35 +10,47 @@ import 'widgets/sidebar/application.dart';
 // maybe custom directories
 //
 // settings: vim keybindings, change appearance, load presets
+Future<Map<String, dynamic>> loadData() async {
+  var configMap = await initializeApp();
+  return Map<String, dynamic>.from(configMap);
+}
 
-void main() {
-  initializeApp();
-  runApp(const MyApp());
+// void main() {
+// final Map<String, dynamic> config = await loadData();
+//   runApp(const MyApp());
+// }
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final Map<String, dynamic> config = await loadData();
+
+  runApp(MyApp(config: config));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Map<String, dynamic> config;
+  const MyApp({super.key, required this.config});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Sanbo',
-      home: const HomePage(),
+      home: HomePage(config: config),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final Map<String, dynamic> config;
+  const HomePage({super.key, required this.config});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  Future<void> loadConfig() async {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +62,7 @@ class _HomePageState extends State<HomePage> {
             ApplicationContainer(
               applicationName: "abb",
               applicationIconPath: "fjalds",
+              config: widget.config,
             ),
           ],
         ),

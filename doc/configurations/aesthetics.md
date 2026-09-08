@@ -10,6 +10,8 @@ The configuration will be a big hashmap, something like this:
   "foreground":(200,200,200,1)
 }
 ```
+  
+Remember the last item(in this case foreground), must not add a trailing comma
 
 ## Colors
 
