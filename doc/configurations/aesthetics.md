@@ -19,7 +19,8 @@ Remember the last item(in this case foreground), must not add a trailing comma
   
 "foreground":"(rgba)" --> the foreground color(text color) of the app  
   
-"line_color":"(rgba)" --> color of every line in the app  
+"line_color":"(rgba)" --> color of every line(border) in the app  
   
 "app_background":"(rgba)" --> background color for the application widget
-
+  
+"sidebar_background":"(rgba)" --> background color of the sidebar

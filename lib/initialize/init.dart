@@ -18,10 +18,17 @@ Future<Map> initializeApp() async {
   final configResponse = await configFile.readAsString();
   final configData = await json.decode(configResponse);
 
-  List isValidRgba(String value) {
+  List isValidRgba(String? maybeValue) {
     final regex = RegExp(
       r'^\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(0|1|0?\.\d+)\s*\)$',
     );
+    String value;
+
+    if (maybeValue == null) {
+      return [false];
+    } else {
+      value = maybeValue;
+    }
 
     final match = regex.firstMatch(value);
     if (match == null) return [false];
@@ -43,8 +50,11 @@ Future<Map> initializeApp() async {
     "foreground",
     "line_color",
     "app_background",
+    "sidebar_background",
   ];
 
+  // currently does not handle the situation where one of the colorConfigOptions doesnt actually exist in the config file
+  // because isValidRgba only accepts String value, when the option doesnt exist, config[option] returns null
   for (var option in colorConfigOptions) {
     List optionRgbaList = isValidRgba(configData[option]);
     if (optionRgbaList[0]) {
@@ -74,6 +84,11 @@ Future<Map> initializeApp() async {
           });
           break;
         case "app_background":
+          configMap.addAll({
+            option: [200, 200, 200, 1],
+          });
+          break;
+        case "sidebar_background":
           configMap.addAll({
             option: [200, 200, 200, 1],
           });

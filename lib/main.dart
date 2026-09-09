@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:collection';
 import './initialize/init.dart';
-import 'widgets/sidebar/application.dart';
+import 'widgets/sidebar/sidebar.dart';
 
 // .desktop files directories
 // ~/.local/share/applications/ --> no root needed
@@ -63,14 +63,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: .center,
-          children: [
-            ApplicationContainer(
-              applicationName: "abb",
-              applicationIconPath:
-                  "/home/jupiter/Pictures/svg-files/discord.svg",
-              config: widget.config,
-            ),
-          ],
+          children: [Sidebar(config: widget.config)],
         ),
       ),
     );
