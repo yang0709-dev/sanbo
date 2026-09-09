@@ -54,7 +54,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Color.fromRGBO(
+        widget.config["background"][0],
+        widget.config["background"][1],
+        widget.config["background"][2],
+        widget.config["background"][3],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: .center,
@@ -62,7 +67,7 @@ class _HomePageState extends State<HomePage> {
             ApplicationContainer(
               applicationName: "abb",
               applicationIconPath:
-                  "/home/jupiter/Pictures/desktop-wallpapers/1gq3ckai0hqg1.png",
+                  "/home/jupiter/Pictures/svg-files/discord.svg",
               config: widget.config,
             ),
           ],

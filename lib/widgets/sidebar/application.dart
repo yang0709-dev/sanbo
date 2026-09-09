@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
+import 'package:flutter_svg/svg.dart';
+
 // load configMap settings
 // primary line_color for the border, app_background for background color of the app block
 
 class ApplicationContainer extends StatelessWidget {
+  @override
+  void initState() {}
   final String applicationName;
   final String applicationIconPath;
   var config;
@@ -37,13 +41,25 @@ class ApplicationContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String applicationIconExtension = applicationIconPath
+        .split(".")
+        .last
+        .trim();
+    bool isExtensionSvg() {
+      if (applicationIconExtension == 'svg') {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
     return SizedBox(
       height: 80,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 3),
         child: ElevatedButton(
           onPressed: () {
-            print(applicationIconPath);
+            print(applicationIconExtension);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: appBackground,
@@ -54,15 +70,25 @@ class ApplicationContainer extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Image(
-                height: 55,
-                width: 55,
-                image: FileImage(File(applicationIconPath)),
-                errorBuilder: ((context, error, stackTrace) {
-                  return Icon(Icons.broken_image, color: foreground, size: 50);
-                }),
-                fit: BoxFit.cover,
-              ),
+              isExtensionSvg()
+                  ? SizedBox(
+                      width: 55,
+                      height: 55,
+                      child: SvgPicture.file(File(applicationIconPath)),
+                    )
+                  : Image(
+                      height: 55,
+                      width: 55,
+                      image: FileImage(File(applicationIconPath)),
+                      errorBuilder: ((context, error, stackTrace) {
+                        return Icon(
+                          Icons.broken_image,
+                          color: foreground,
+                          size: 55,
+                        );
+                      }),
+                      fit: BoxFit.cover,
+                    ),
               SizedBox(width: 20),
               Text(
                 applicationName,
