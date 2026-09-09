@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../initialize/scan_dirs.dart';
 
+// the sidebar might need to be Stateful instead,
+// because of search function on the application
+
 class Sidebar extends StatelessWidget {
   var config;
   Sidebar({super.key, required this.config});

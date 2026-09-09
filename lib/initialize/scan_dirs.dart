@@ -10,6 +10,11 @@ import 'dart:io';
 // Icon= (all /usr/share/applications/ uses icon name, no idea how to handle that)
 //
 // returns a two layer list, that looks like [["name","iconPath"],["name","iconPath"]]
+// also stores the original Exec so its easier to revert (don't store in .config)
+//
+// some apps in ~/.local/share/applications/ also uses icon name instead of the absolute path
+// some doesnt have icon at all
+//
 
 Future<List> scanDirectory(String directoryPath) async {
   // check if the directory actually exist
@@ -28,10 +33,52 @@ Future<List> scanDirectory(String directoryPath) async {
     // check .desktop file validation
     final List entities = await Directory(directoryPath).list().toList();
     final Iterable<File> files = entities.whereType<File>();
+
+    // returns [namePath,iconPath] after all the stuff
+    // in this function returns something like [0,val]
+    // where the first value is the property of the .desktop file
+    // 0 = not name and not icon
+    // 1 = name
+    // 2 = icon
+    List propertyCheck(String property) {
+      RegExp nameRegx = RegExp(r'^(Name=)(.*)');
+      RegExp iconRegx = RegExp(r'^(Icon=)(.*)');
+      if (nameRegx.hasMatch(property)) {
+        final name = nameRegx.firstMatch(property);
+        return [1, name?.group(2)];
+      } else if (iconRegx.hasMatch(property)) {
+        final icon = iconRegx.firstMatch(property);
+        return [2, icon?.group(2)];
+      } else {
+        return [0];
+      }
+    }
+
+    List applicationData = [];
     for (File file in files) {
       if (isDesktopFile(directoryPath.split("/").last.trim())) {
-        final configResponse = await file.readAsString();
+        final lines = await file.readAsLines();
+        for (String line in lines) {
+          // print(line);
+          List res = [null, null];
+          List propertyList = propertyCheck(line);
+          if (propertyList[0] == 0) {
+            continue;
+          } else if (propertyList[0] == 1) {
+            res[0] = propertyList[1];
+          } else if (propertyList[0] == 2) {
+            res[1] = propertyList[2];
+          }
+
+          if (res[0] == null) {
+            continue;
+          } else {
+            // have both name and icon, or no icon
+            applicationData.add(res);
+          }
+        }
       }
+      print(applicationData);
     }
   }
   return [];

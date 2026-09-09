@@ -5,6 +5,8 @@ import './initialize/init.dart';
 import 'widgets/sidebar/sidebar.dart';
 import 'widgets/mainpage/mainpage.dart';
 
+import './initialize/scan_dirs.dart';
+
 // .desktop files directories
 // ~/.local/share/applications/ --> no root needed
 // /usr/share/application --> need root to modify, readable by all(implement root password prompt)
@@ -25,6 +27,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final Map<String, dynamic> config = await loadData();
+  String home = Platform.environment['HOME']!;
+  final appList = await scanDirectory('$home/.local/share/applications');
 
   runApp(MyApp(config: config));
 }
