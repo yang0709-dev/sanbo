@@ -7,8 +7,6 @@ import 'package:flutter_svg/svg.dart';
 // primary line_color for the border, app_background for background color of the app block
 
 class ApplicationContainer extends StatelessWidget {
-  @override
-  void initState() {}
   final String applicationName;
   final String applicationIconPath;
   var config;

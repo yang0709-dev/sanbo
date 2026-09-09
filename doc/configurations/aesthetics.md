@@ -1,6 +1,6 @@
 # Aesthetics
 Configure how the program looks
-
+  
 ## Getting Started
 The config file is located at `~/.config/sanbo/config.json`
 The configuration will be a big hashmap, something like this:

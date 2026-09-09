@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:collection';
 import './initialize/init.dart';
 import 'widgets/sidebar/sidebar.dart';
+import 'widgets/mainpage/mainpage.dart';
 
 // .desktop files directories
 // ~/.local/share/applications/ --> no root needed
@@ -61,9 +62,12 @@ class _HomePageState extends State<HomePage> {
         widget.config["background"][3],
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [Sidebar(config: widget.config)],
+        child: Row(
+          mainAxisAlignment: .start,
+          children: [
+            Sidebar(config: widget.config),
+            MainPage(config: widget.config),
+          ],
         ),
       ),
     );
