@@ -9,7 +9,7 @@ import 'dart:io';
 // Name=
 // Icon= (all /usr/share/applications/ uses icon name, no idea how to handle that)
 //
-// returns a two layer list, that looks like [["name","iconPath"],["name","iconPath"]]
+// returns a two layer list, that looks like [["name","iconPath","absolutePath"],["name","iconPath","absolutePath"]]
 // also stores the original Exec so its easier to revert (don't store in .config)
 //
 // some apps in ~/.local/share/applications/ also uses icon name instead of the absolute path
@@ -57,8 +57,8 @@ Future<List> scanDirectory(String directoryPath) async {
     List applicationData = [];
     for (File file in files) {
       if (isDesktopFile(file.path.split("/").last.trim())) {
-        final lines = await file.readAsLines();
-        List res = [null, null];
+        final List<String> lines = await file.readAsLines();
+        List res = ["", "", file.path];
         for (String line in lines) {
           // print(line);
           List propertyList = propertyCheck(line);
@@ -71,16 +71,16 @@ Future<List> scanDirectory(String directoryPath) async {
           }
         }
 
-        if (res[0] == null) {
+        if (res[0] == "") {
           continue;
         } else {
           // have both name and icon, or no icon
           applicationData.add(res);
-          print(file.path);
+          // print(file.path);
         }
       }
     }
-    print(applicationData);
+    // print(applicationData);
+    return applicationData;
   }
-  return [];
 }

@@ -70,27 +70,27 @@ Future<Map> initializeApp() async {
       switch (option) {
         case "background":
           configMap.addAll({
-            option: [20, 20, 20, 1],
+            option: [20, 20, 20, 1.0],
           });
           break;
         case "foreground":
           configMap.addAll({
-            option: [255, 255, 255, 1],
+            option: [255, 255, 255, 1.0],
           });
           break;
         case "line_color":
           configMap.addAll({
-            option: [200, 200, 200, 1],
+            option: [200, 200, 200, 1.0],
           });
           break;
         case "app_background":
           configMap.addAll({
-            option: [200, 200, 200, 1],
+            option: [200, 200, 200, 1.0],
           });
           break;
         case "sidebar_background":
           configMap.addAll({
-            option: [200, 200, 200, 1],
+            option: [200, 200, 200, 1.0],
           });
           break;
       }
