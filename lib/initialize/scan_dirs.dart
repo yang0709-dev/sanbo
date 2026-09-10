@@ -20,9 +20,9 @@ Future<List> scanDirectory(String directoryPath) async {
   // check if the directory actually exist
   bool isDesktopFile(String filename) {
     if (filename.split(".").last.trim() == "desktop") {
-      return false;
-    } else {
       return true;
+    } else {
+      return false;
     }
   }
 
@@ -56,30 +56,31 @@ Future<List> scanDirectory(String directoryPath) async {
 
     List applicationData = [];
     for (File file in files) {
-      if (isDesktopFile(directoryPath.split("/").last.trim())) {
+      if (isDesktopFile(file.path.split("/").last.trim())) {
         final lines = await file.readAsLines();
+        List res = [null, null];
         for (String line in lines) {
           // print(line);
-          List res = [null, null];
           List propertyList = propertyCheck(line);
           if (propertyList[0] == 0) {
             continue;
           } else if (propertyList[0] == 1) {
             res[0] = propertyList[1];
           } else if (propertyList[0] == 2) {
-            res[1] = propertyList[2];
-          }
-
-          if (res[0] == null) {
-            continue;
-          } else {
-            // have both name and icon, or no icon
-            applicationData.add(res);
+            res[1] = propertyList[1];
           }
         }
+
+        if (res[0] == null) {
+          continue;
+        } else {
+          // have both name and icon, or no icon
+          applicationData.add(res);
+          print(file.path);
+        }
       }
-      print(applicationData);
     }
+    print(applicationData);
   }
   return [];
 }
