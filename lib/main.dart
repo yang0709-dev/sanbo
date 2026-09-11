@@ -4,7 +4,7 @@ import 'dart:collection';
 import './initialize/init.dart';
 import 'widgets/sidebar/sidebar.dart';
 import 'widgets/mainpage/mainpage.dart';
-
+import 'package:window_manager/window_manager.dart';
 import './initialize/scan_dirs.dart';
 
 // .desktop files directories
@@ -25,7 +25,14 @@ Future<Map<String, dynamic>> loadData() async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await windowManager.ensureInitialized();
+  WindowOptions windowOptions = WindowOptions(
+    titleBarStyle: TitleBarStyle.hidden,
+  );
+  windowManager.waitUntilReadyToShow(windowOptions, () async {
+    await windowManager.show();
+    await windowManager.focus();
+  });
   final Map<String, dynamic> config = await loadData();
   String home = Platform.environment['HOME']!;
   final appList = await scanDirectory('$home/.local/share/applications');
@@ -59,12 +66,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(
-        widget.config["background"][0],
-        widget.config["background"][1],
-        widget.config["background"][2],
-        widget.config["background"][3],
-      ),
+      backgroundColor: widget.config["background"],
       body: Center(
         child: Row(
           mainAxisAlignment: .start,

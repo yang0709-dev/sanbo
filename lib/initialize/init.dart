@@ -59,39 +59,29 @@ Future<Map> initializeApp() async {
     List optionRgbaList = isValidRgba(configData[option]);
     if (optionRgbaList[0]) {
       configMap.addAll({
-        option: [
+        option: Color.fromRGBO(
           optionRgbaList[1],
           optionRgbaList[2],
           optionRgbaList[3],
           optionRgbaList[4],
-        ],
+        ),
       });
     } else if (!optionRgbaList[0]) {
       switch (option) {
         case "background":
-          configMap.addAll({
-            option: [20, 20, 20, 1.0],
-          });
+          configMap.addAll({option: Color.fromRGBO(20, 20, 20, 1.0)});
           break;
         case "foreground":
-          configMap.addAll({
-            option: [255, 255, 255, 1.0],
-          });
+          configMap.addAll({option: Color.fromRGBO(255, 255, 255, 1.0)});
           break;
         case "line_color":
-          configMap.addAll({
-            option: [200, 200, 200, 1.0],
-          });
+          configMap.addAll({option: Color.fromRGBO(200, 200, 200, 1.0)});
           break;
         case "app_background":
-          configMap.addAll({
-            option: [200, 200, 200, 1.0],
-          });
+          configMap.addAll({option: Color.fromRGBO(200, 200, 200, 1.0)});
           break;
         case "sidebar_background":
-          configMap.addAll({
-            option: [200, 200, 200, 1.0],
-          });
+          configMap.addAll({option: Color.fromRGBO(200, 200, 200, 1.0)});
           break;
       }
     }

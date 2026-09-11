@@ -20,12 +20,7 @@ class _SidebarState extends State<Sidebar> {
     "${Platform.environment['HOME']!}/.local/share/applications",
   );
   @override
-  late Color sidebarBackground = Color.fromRGBO(
-    widget.config["sidebar_background"][0],
-    widget.config["sidebar_background"][1],
-    widget.config["sidebar_background"][2],
-    widget.config["sidebar_background"][3],
-  );
+  late Color sidebarBackground = widget.config["sidebar_background"];
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
@@ -37,17 +32,27 @@ class _SidebarState extends State<Sidebar> {
         future: appInfoList,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           } else {
             final applicationInfos = snapshot.data!;
-            return Column(
-              children: applicationInfos.map((item) {
-                return ApplicationContainer(
-                  applicationName: item[0],
-                  applicationIconPath: item[1],
-                  config: widget.config,
-                );
-              }).toList(),
+
+            // https://stackoverflow.com/questions/69853729/flutter-the-scrollbars-scrollcontroller-has-no-scrollposition-attached
+            final scrollController = ScrollController();
+            return Scrollbar(
+              controller: scrollController,
+              thumbVisibility: true,
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: Column(
+                  children: applicationInfos.map((item) {
+                    return ApplicationContainer(
+                      applicationName: item[0],
+                      applicationIconPath: item[1],
+                      config: widget.config,
+                    );
+                  }).toList(),
+                ),
+              ),
             );
           }
         },

@@ -16,6 +16,8 @@ import 'dart:io';
 // some doesnt have icon at all
 //
 
+enum SidebarItem { notNameAndIcon, name, icon }
+
 Future<List> scanDirectory(String directoryPath) async {
   // check if the directory actually exist
   bool isDesktopFile(String filename) {
@@ -43,14 +45,15 @@ Future<List> scanDirectory(String directoryPath) async {
     List propertyCheck(String property) {
       RegExp nameRegx = RegExp(r'^(Name=)(.*)');
       RegExp iconRegx = RegExp(r'^(Icon=)(.*)');
+
       if (nameRegx.hasMatch(property)) {
         final name = nameRegx.firstMatch(property);
-        return [1, name?.group(2)];
+        return [SidebarItem.name, name?.group(2)];
       } else if (iconRegx.hasMatch(property)) {
         final icon = iconRegx.firstMatch(property);
-        return [2, icon?.group(2)];
+        return [SidebarItem.icon, icon?.group(2)];
       } else {
-        return [0];
+        return [SidebarItem.notNameAndIcon];
       }
     }
 
@@ -62,11 +65,11 @@ Future<List> scanDirectory(String directoryPath) async {
         for (String line in lines) {
           // print(line);
           List propertyList = propertyCheck(line);
-          if (propertyList[0] == 0) {
+          if (propertyList[0] == SidebarItem.notNameAndIcon) {
             continue;
-          } else if (propertyList[0] == 1) {
+          } else if (propertyList[0] == SidebarItem.name) {
             res[0] = propertyList[1];
-          } else if (propertyList[0] == 2) {
+          } else if (propertyList[0] == SidebarItem.icon) {
             res[1] = propertyList[1];
           }
         }

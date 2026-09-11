@@ -16,27 +16,9 @@ class ApplicationContainer extends StatelessWidget {
     required this.applicationIconPath,
     required this.config,
   });
-  late Color appBackground = Color.fromRGBO(
-    config["app_background"][0],
-    config["app_background"][1],
-    config["app_background"][2],
-    config["app_background"][3],
-  );
-
-  late Color lineColor = Color.fromRGBO(
-    config["line_color"][0],
-    config["line_color"][1],
-    config["line_color"][2],
-    config["line_color"][3],
-  );
-
-  late Color foreground = Color.fromRGBO(
-    config["foreground"][0],
-    config["foreground"][1],
-    config["foreground"][2],
-    config["foreground"][3],
-  );
-
+  late Color appBackground = config['app_background'];
+  late Color lineColor = config['line_color'];
+  late Color foreground = config['foreground'];
   @override
   Widget build(BuildContext context) {
     String applicationIconExtension = applicationIconPath
@@ -56,9 +38,7 @@ class ApplicationContainer extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 3),
         child: ElevatedButton(
-          onPressed: () {
-            print(applicationIconExtension);
-          },
+          onPressed: () {},
           style: ElevatedButton.styleFrom(
             backgroundColor: appBackground,
             shape: RoundedRectangleBorder(
@@ -70,27 +50,31 @@ class ApplicationContainer extends StatelessWidget {
             children: [
               isExtensionSvg()
                   ? SizedBox(
-                      width: 55,
-                      height: 55,
+                      width: 45,
+                      height: 45,
                       child: SvgPicture.file(File(applicationIconPath)),
                     )
                   : Image(
-                      height: 55,
-                      width: 55,
+                      height: 45,
+                      width: 45,
                       image: FileImage(File(applicationIconPath)),
                       errorBuilder: ((context, error, stackTrace) {
                         return Icon(
                           Icons.broken_image,
                           color: foreground,
-                          size: 55,
+                          size: 45,
                         );
                       }),
                       fit: BoxFit.cover,
                     ),
               SizedBox(width: 20),
-              Text(
-                applicationName,
-                style: TextStyle(color: foreground, fontSize: 25),
+              Expanded(
+                child: Text(
+                  applicationName,
+                  style: TextStyle(color: foreground, fontSize: 16),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),

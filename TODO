@@ -1,2 +1,3 @@
 add error handling to svg file application icon
 handle Icon name of .desktop files in /usr/share/applications
+make "flutter run" works offline??
