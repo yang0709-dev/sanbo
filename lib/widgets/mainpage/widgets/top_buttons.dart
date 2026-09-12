@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class IconButtonsAtTheTop extends StatefulWidget {
-  var config;
+  Map<String, dynamic> config;
   Function buttonClicked;
   IconData? buttonIcon;
   String tooltip;

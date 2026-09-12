@@ -41,55 +41,55 @@ class _ApplicationContainerState extends State<ApplicationContainer> {
       }
     }
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: SizedBox(
-        height: 80,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 5),
-          child: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: appBackground,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-              side: BorderSide(width: 2, color: lineColor),
+    return SizedBox(
+      height: 80,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 5),
+        child: ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            backgroundColor: appBackground,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
             ),
-            child: Row(
-              children: [
-                isExtensionSvg()
-                    ? SizedBox(
-                        width: imageSize,
-                        height: imageSize,
-                        child: SvgPicture.file(
-                          File(widget.applicationIconPath),
-                        ),
-                      )
-                    : Image(
-                        height: imageSize,
-                        width: imageSize,
-                        image: FileImage(File(widget.applicationIconPath)),
-                        errorBuilder: ((context, error, stackTrace) {
-                          return Icon(
-                            Icons.broken_image,
-                            color: foreground,
-                            size: imageSize,
-                          );
-                        }),
-                        fit: BoxFit.cover,
-                      ),
-                SizedBox(width: 20),
-                Expanded(
-                  child: Text(
-                    widget.applicationName,
-                    style: TextStyle(color: foreground, fontSize: 16),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+            side: BorderSide(width: 2, color: lineColor),
+            enabledMouseCursor: SystemMouseCursors.click,
+          ),
+          onHover: (isHovering) {
+            if (isHovering) {
+            } else {}
+          },
+          child: Row(
+            children: [
+              isExtensionSvg()
+                  ? SizedBox(
+                      width: imageSize,
+                      height: imageSize,
+                      child: SvgPicture.file(File(widget.applicationIconPath)),
+                    )
+                  : Image(
+                      height: imageSize,
+                      width: imageSize,
+                      image: FileImage(File(widget.applicationIconPath)),
+                      errorBuilder: ((context, error, stackTrace) {
+                        return Icon(
+                          Icons.broken_image,
+                          color: foreground,
+                          size: imageSize,
+                        );
+                      }),
+                      fit: BoxFit.cover,
+                    ),
+              SizedBox(width: 20),
+              Expanded(
+                child: Text(
+                  widget.applicationName,
+                  style: TextStyle(color: foreground, fontSize: 16),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
