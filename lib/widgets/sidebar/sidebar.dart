@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../initialize/scan_dirs.dart';
 import 'dart:io';
 import './widgets/applications.dart';
+import './widgets/extra_button_above_apps.dart';
 
 // the sidebar might need to be Stateful instead,
 // because of search function on the application
@@ -46,13 +47,29 @@ class _SidebarState extends State<Sidebar> {
               child: SingleChildScrollView(
                 controller: scrollController,
                 child: Column(
-                  children: applicationInfos.map((item) {
-                    return ApplicationContainer(
-                      applicationName: item[0],
-                      applicationIconPath: item[1],
+                  children: [
+                    // add files
+                    ExtraButtonsAboveApplications(
                       config: widget.config,
-                    );
-                  }).toList(),
+                      buttonIcon: Icons.add,
+                      buttonPressed: () {},
+                      buttonText: "Add Files",
+                    ),
+
+                    ExtraButtonsAboveApplications(
+                      config: widget.config,
+                      buttonIcon: Icons.edit,
+                      buttonPressed: () {},
+                      buttonText: "Edit Profiles",
+                    ),
+                    ...applicationInfos.map((item) {
+                      return ApplicationContainer(
+                        applicationName: item[0],
+                        applicationIconPath: item[1],
+                        config: widget.config,
+                      );
+                    }),
+                  ],
                 ),
               ),
             );
