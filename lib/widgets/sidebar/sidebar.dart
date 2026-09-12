@@ -35,9 +35,10 @@ class _SidebarState extends State<Sidebar> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            // 0 = app name
-            // 1 = app icon
-            final applicationInfos = snapshot.data!;
+            // applicationInfos[0] = app name
+            // applicationInfos[1] = app icon path
+            // applicationInfos[2] = .desktop file absolute path
+            final List<dynamic> applicationInfos = snapshot.data!;
 
             // https://stackoverflow.com/questions/69853729/flutter-the-scrollbars-scrollcontroller-has-no-scrollposition-attached
             final scrollController = ScrollController();
@@ -52,7 +53,9 @@ class _SidebarState extends State<Sidebar> {
                     ExtraButtonsAboveApplications(
                       config: widget.config,
                       buttonIcon: Icons.add,
-                      buttonPressed: () {},
+                      buttonPressed: () {
+                        setState(() {});
+                      },
                       buttonText: "Add Files",
                     ),
 

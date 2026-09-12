@@ -6,6 +6,7 @@ import 'widgets/sidebar/sidebar.dart';
 import 'widgets/mainpage/mainpage.dart';
 import 'package:window_manager/window_manager.dart';
 import './initialize/scan_dirs.dart';
+import './initialize/get_config_data.dart';
 
 // .desktop files directories
 // ~/.local/share/applications/ --> no root needed
@@ -14,14 +15,10 @@ import './initialize/scan_dirs.dart';
 //
 // settings: vim keybindings, change appearance, load presets
 Future<Map<String, dynamic>> loadData() async {
+  // initializeApp => init.dart
   var configMap = await initializeApp();
   return Map<String, dynamic>.from(configMap);
 }
-
-// void main() {
-// final Map<String, dynamic> config = await loadData();
-//   runApp(const MyApp());
-// }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +30,11 @@ Future<void> main() async {
     await windowManager.show();
     await windowManager.focus();
   });
-  final Map<String, dynamic> config = await loadData();
+  // get_config_data.dart
+  final repository = HomePageRepository();
+  final Map<String, dynamic> config = await repository.getConfigData();
+  // print(conf);
+  // final Map<String, dynamic> config = await loadData();
   String home = Platform.environment['HOME']!;
   final appList = await scanDirectory('$home/.local/share/applications');
 
