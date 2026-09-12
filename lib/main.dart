@@ -14,11 +14,6 @@ import './initialize/get_config_data.dart';
 // maybe custom directories
 //
 // settings: vim keybindings, change appearance, load presets
-Future<Map<String, dynamic>> loadData() async {
-  // initializeApp => init.dart
-  var configMap = await initializeApp();
-  return Map<String, dynamic>.from(configMap);
-}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,8 +28,6 @@ Future<void> main() async {
   // get_config_data.dart
   final repository = HomePageRepository();
   final Map<String, dynamic> config = await repository.getConfigData();
-  // print(conf);
-  // final Map<String, dynamic> config = await loadData();
   String home = Platform.environment['HOME']!;
   final appList = await scanDirectory('$home/.local/share/applications');
 
