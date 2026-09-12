@@ -10,10 +10,21 @@ class HideSidebarButton extends StatefulWidget {
 
 class _HideSidebarButtonState extends State<HideSidebarButton> {
   @override
+  late Color foregroundColor = widget.config["foreground"];
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {},
-      child: Icon(Icons.fax_rounded, color: Colors.green),
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: IconButton(
+        icon: Icon(Icons.arrow_back_ios_new, color: foregroundColor),
+        onPressed: () {},
+
+        style: ButtonStyle(
+          padding: WidgetStatePropertyAll(EdgeInsets.zero),
+          shape: WidgetStatePropertyAll(CircleBorder()),
+          backgroundColor: WidgetStatePropertyAll(Colors.transparent),
+          shadowColor: WidgetStatePropertyAll(Colors.transparent),
+        ),
+      ),
     );
   }
 }

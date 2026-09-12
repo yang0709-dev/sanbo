@@ -19,6 +19,7 @@ class ApplicationContainer extends StatelessWidget {
   late Color appBackground = config['app_background'];
   late Color lineColor = config['line_color'];
   late Color foreground = config['foreground'];
+  double imageSize = 45;
   @override
   Widget build(BuildContext context) {
     String applicationIconExtension = applicationIconPath
@@ -36,7 +37,7 @@ class ApplicationContainer extends StatelessWidget {
     return SizedBox(
       height: 80,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 3),
+        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 5),
         child: ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
@@ -50,19 +51,19 @@ class ApplicationContainer extends StatelessWidget {
             children: [
               isExtensionSvg()
                   ? SizedBox(
-                      width: 45,
-                      height: 45,
+                      width: imageSize,
+                      height: imageSize,
                       child: SvgPicture.file(File(applicationIconPath)),
                     )
                   : Image(
-                      height: 45,
-                      width: 45,
+                      height: imageSize,
+                      width: imageSize,
                       image: FileImage(File(applicationIconPath)),
                       errorBuilder: ((context, error, stackTrace) {
                         return Icon(
                           Icons.broken_image,
                           color: foreground,
-                          size: 45,
+                          size: imageSize,
                         );
                       }),
                       fit: BoxFit.cover,

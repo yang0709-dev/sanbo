@@ -12,7 +12,17 @@ class MainPage extends StatelessWidget {
     return Expanded(
       child: Container(
         color: background,
-        child: Column(children: [HideSidebarButton(config: config)]),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                HideSidebarButton(config: config),
+                Spacer(),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -25,7 +25,7 @@ class _SidebarState extends State<Sidebar> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Container(
-      width: screenWidth * 0.4,
+      width: screenWidth * 0.3,
       height: screenHeight,
       color: sidebarBackground,
       child: FutureBuilder(
@@ -34,6 +34,8 @@ class _SidebarState extends State<Sidebar> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else {
+            // 0 = app name
+            // 1 = app icon
             final applicationInfos = snapshot.data!;
 
             // https://stackoverflow.com/questions/69853729/flutter-the-scrollbars-scrollcontroller-has-no-scrollposition-attached
