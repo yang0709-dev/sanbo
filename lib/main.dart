@@ -7,6 +7,7 @@ import 'widgets/mainpage/mainpage.dart';
 import 'package:window_manager/window_manager.dart';
 import './initialize/scan_dirs.dart';
 import './initialize/get_config_data.dart';
+import './app/router.dart';
 
 // .desktop files directories
 // ~/.local/share/applications/ --> no root needed
@@ -28,9 +29,9 @@ Future<void> main() async {
   // get_config_data.dart
   final repository = HomePageRepository();
   final Map<String, dynamic> config = await repository.getConfigData();
-  String home = Platform.environment['HOME']!;
-  final appList = await scanDirectory('$home/.local/share/applications');
-
+  // String home = Platform.environment['HOME']!;
+  // final appList = await scanDirectory('$home/.local/share/applications');
+  //
   runApp(MyApp(config: config));
 }
 
@@ -40,10 +41,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Sanbo',
-      home: HomePage(config: config),
+      routerConfig: appRouter,
+      // home: HomePage(config: config),
     );
   }
 }

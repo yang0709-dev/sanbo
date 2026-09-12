@@ -13,7 +13,7 @@ final appRouter = GoRouter(
       }),
     ),
     GoRoute(
-      path: '/',
+      path: '/home',
       builder: (context, state) {
         final data = state.extra as Map<String, dynamic>;
         return HomePage(config: data);

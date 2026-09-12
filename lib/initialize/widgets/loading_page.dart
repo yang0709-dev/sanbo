@@ -13,7 +13,8 @@ class _LoadingPageState extends State<LoadingPage> {
   Future<void> loadHomeConfigData() async {
     final repository = HomePageRepository();
     final Map<String, dynamic> config = await repository.getConfigData();
-    context.go('/home');
+    // print(config);
+    context.go('/home', extra: config);
   }
 
   @override

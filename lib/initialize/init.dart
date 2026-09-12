@@ -6,6 +6,7 @@ import 'dart:convert';
 
 Future<Map> initializeApp() async {
   final Map<String, dynamic> configMap = HashMap();
+  print('config loaded');
   // read config file(keybinding, appearence)
   // load .desktop files and their current permissions
   // preset permissions combinations
