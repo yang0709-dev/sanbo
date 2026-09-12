@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../initialize/scan_dirs.dart';
 import 'dart:io';
-import './applications.dart';
+import './widgets/applications.dart';
 
 // the sidebar might need to be Stateful instead,
 // because of search function on the application
