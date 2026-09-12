@@ -63,16 +63,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool sidebarVisible = true;
+  void toggleSidebar() {
+    setState(() {
+      sidebarVisible = !sidebarVisible;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final sidebarWidth = (MediaQuery.of(context).size.width) * 0.3;
+
     return Scaffold(
       backgroundColor: widget.config["background"],
       body: Center(
         child: Row(
           mainAxisAlignment: .start,
           children: [
-            Sidebar(config: widget.config),
-            MainPage(config: widget.config),
+            AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              width: sidebarVisible ? sidebarWidth : 0,
+              child: Sidebar(config: widget.config),
+            ),
+            MainPage(config: widget.config, hideSidebarFunction: toggleSidebar),
           ],
         ),
       ),

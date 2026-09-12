@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
-import './hide_sidebar_button.dart';
 import './widgets/top_buttons.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   var config;
-  MainPage({super.key, required this.config});
+  Function hideSidebarFunction;
+  MainPage({
+    super.key,
+    required this.config,
+    required this.hideSidebarFunction,
+  });
 
-  late Color background = config["background"];
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  late Color background = widget.config["background"];
+
+  bool isSidebarVisible = true;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -21,15 +32,22 @@ class MainPage extends StatelessWidget {
               children: [
                 // hide sidebar button
                 IconButtonsAtTheTop(
-                  config: config,
-                  buttonClicked: () {},
-                  buttonIcon: Icons.arrow_back_ios_new,
+                  config: widget.config,
+                  buttonClicked: () {
+                    widget.hideSidebarFunction();
+                    setState(() {
+                      isSidebarVisible = !isSidebarVisible;
+                    });
+                  },
+                  buttonIcon: isSidebarVisible
+                      ? Icons.arrow_back_ios_new
+                      : Icons.arrow_forward_ios,
                 ),
                 Spacer(),
 
                 // minimize app
                 IconButtonsAtTheTop(
-                  config: config,
+                  config: widget.config,
                   buttonClicked: () {
                     windowManager.minimize();
                   },
@@ -38,7 +56,7 @@ class MainPage extends StatelessWidget {
 
                 // maximize app
                 IconButtonsAtTheTop(
-                  config: config,
+                  config: widget.config,
                   buttonClicked: () {
                     windowManager.maximize();
                   },
@@ -47,7 +65,7 @@ class MainPage extends StatelessWidget {
 
                 // close app
                 IconButtonsAtTheTop(
-                  config: config,
+                  config: widget.config,
                   buttonClicked: () {
                     windowManager.close();
                   },
