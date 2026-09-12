@@ -37,11 +37,8 @@ Future<List> scanDirectory(String directoryPath) async {
     final Iterable<File> files = entities.whereType<File>();
 
     // returns [namePath,iconPath] after all the stuff
-    // in this function returns something like [0,val]
+    // in this function returns something like [SidebarItem.{propertyName},val]
     // where the first value is the property of the .desktop file
-    // 0 = not name and not icon
-    // 1 = name
-    // 2 = icon
     List propertyCheck(String property) {
       RegExp nameRegx = RegExp(r'^(Name=)(.*)');
       RegExp iconRegx = RegExp(r'^(Icon=)(.*)');
