@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../initialize/scan_dirs.dart';
 import 'dart:io';
 import './widgets/applications.dart';
@@ -11,7 +12,6 @@ import './widgets/extra_button_above_apps.dart';
 class Sidebar extends StatefulWidget {
   var config;
   Sidebar({super.key, required this.config});
-
   @override
   State<Sidebar> createState() => _SidebarState();
 }
@@ -20,6 +20,7 @@ class _SidebarState extends State<Sidebar> {
   Future<List<dynamic>> appInfoList = scanDirectory(
     "${Platform.environment['HOME']!}/.local/share/applications",
   );
+
   @override
   late Color sidebarBackground = widget.config["sidebar_background"];
   Widget build(BuildContext context) {
@@ -39,7 +40,6 @@ class _SidebarState extends State<Sidebar> {
             // applicationInfos[1] = app icon path
             // applicationInfos[2] = .desktop file absolute path
             final List<dynamic> applicationInfos = snapshot.data!;
-
             // https://stackoverflow.com/questions/69853729/flutter-the-scrollbars-scrollcontroller-has-no-scrollposition-attached
             final scrollController = ScrollController();
             return Scrollbar(
@@ -56,13 +56,14 @@ class _SidebarState extends State<Sidebar> {
                       buttonPressed: () {
                         setState(() {});
                       },
-                      buttonText: "Add Files",
+                      buttonText: "Add New",
                     ),
-
                     ExtraButtonsAboveApplications(
                       config: widget.config,
                       buttonIcon: Icons.edit,
-                      buttonPressed: () {},
+                      buttonPressed: () {
+                        context.go('/home/edit-profiles', extra: widget.config);
+                      },
                       buttonText: "Edit Profiles",
                     ),
                     ...applicationInfos.map((item) {

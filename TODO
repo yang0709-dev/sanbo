@@ -1,3 +1,5 @@
 add error handling to svg file application icon
-handle Icon name of .desktop files
+handle Icon name of .desktop files (/usr/share/pixmaps/ and others)
 make "flutter run" works offline??
+fix config loading twice problem
+better code design at ./pages (loads potentially duplicated widgets)

@@ -5,7 +5,6 @@ import './initialize/init.dart';
 import 'widgets/sidebar/sidebar.dart';
 import 'widgets/mainpage/mainpage.dart';
 import 'package:window_manager/window_manager.dart';
-import './initialize/scan_dirs.dart';
 import './initialize/get_config_data.dart';
 import './app/router.dart';
 
@@ -52,7 +51,8 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatefulWidget {
   final Map<String, dynamic> config;
-  const HomePage({super.key, required this.config});
+  final Widget content;
+  const HomePage({super.key, required this.config, required this.content});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -82,7 +82,11 @@ class _HomePageState extends State<HomePage> {
               width: sidebarVisible ? sidebarWidth : 0,
               child: Sidebar(config: widget.config),
             ),
-            MainPage(config: widget.config, hideSidebarFunction: toggleSidebar),
+            MainPage(
+              config: widget.config,
+              hideSidebarFunction: toggleSidebar,
+              content: widget.content,
+            ),
           ],
         ),
       ),

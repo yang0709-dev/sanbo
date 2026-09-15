@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../get_config_data.dart';
 import 'package:go_router/go_router.dart';
+import '../../apis/debug_messages.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
@@ -21,6 +22,7 @@ class _LoadingPageState extends State<LoadingPage> {
   void initState() {
     super.initState();
     loadHomeConfigData();
+    logDebug("Config Loaded");
   }
 
   @override
